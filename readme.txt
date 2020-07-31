@@ -1,0 +1,1 @@
+This template is just a convertion example of plain HTML template to WordPress based template
