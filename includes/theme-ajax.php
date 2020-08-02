@@ -74,6 +74,24 @@ function orangutantheme_update_section_layout()
                         "result" => ""
                         );
 
+      $nonce = sanitize_text_field($_POST['nonce']);
+                
+      if( !wp_verify_nonce( $nonce, 'orangutantheme-admin-nonce' ) ){
+            $response['code'] = "500";
+            $response['message'] = "nonce is not recognize";
+      }else{
+
+            $sect_num = sanitize_text_field($_POST['section_number']);
+            $sect_layout = sanitize_text_field($_POST['section_layout']);
+            $sect_col = sanitize_text_field($_POST['section_column']);
+            $sect_row = sanitize_text_field($_POST['section_row']);
+
+            update_option('orut_title_section' . $sect_num , sanitize_text_field($_POST['title']) );
+            update_option('orut_layout_section' . $sect_num , $sect_layout);
+            update_option('orut_gridsize_section' . $sect_num , $sect_col . ";" . $sect_row );
+      }
+
+
       echo json_encode($response);
       wp_die();      
 }// endfunc orangutantheme_update_section_layout

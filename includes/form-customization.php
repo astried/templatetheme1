@@ -161,8 +161,16 @@ margin-left:2%;
 
                               <?php
                               
-                              $section1_layout = get_option('orut_frontend_section1_layout');
-                              $section1 = get_option('orut_frontend_section1');
+                              $section1_layout = get_option('orut_layout_section1');
+                              $section1_grids = get_option('orut_gridsize_section1');
+
+                              $index = explode(";", $section1_grids);
+
+                              $row = 1;
+                              $col = 1;
+
+                              if(isset($index[0])) $col = $index[0];
+                              if(isset($index[1])) $row = $index[1];
 
                               $post_grid = "";
 
@@ -175,6 +183,11 @@ margin-left:2%;
                               <div class="panel-body">                                
                                     <div class="layout-box">
                                     <div class="row">
+                                    <div class="row form-group col-lg-12">
+                                          <div class="col-lg-12 mb-12">
+                                                <input id="orut-txt-title-section1" type="text" class="form-control" placeholder="title">
+                                          </div>
+                                    </div>                                            
                                           <div class="col-md-3 col-sm-3">
                                           <div class="radio radio-adjust">
                                                 <label>
@@ -209,19 +222,19 @@ margin-left:2%;
                                                 <div class="col-lg-6 mb-6">
                                                       Grid Columns<br>                                       
                                                       <select id="orut-num-col-section1" type="text" class="form-control">
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
+                                                            <option value="1" <?php if($col==1) echo "selected";?>>1</option>
+                                                            <option value="2" <?php if($col==2) echo "selected";?>>2</option>
+                                                            <option value="3" <?php if($col==3) echo "selected";?>>3</option>
+                                                            <option value="4" <?php if($col==4) echo "selected";?>>4</option>
                                                       </select>
                                                 </div>
                                                 <div class="col-lg-6 mb-6">
                                                       Grid Rows<br>
                                                       <select id="orut-num-row-section1" type="text" class="form-control">
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
+                                                            <option value="1" <?php if($row==1) echo "selected";?>>1</option>
+                                                            <option value="2" <?php if($row==2) echo "selected";?>>2</option>
+                                                            <option value="3" <?php if($row==3) echo "selected";?>>3</option>
+                                                            <option value="4" <?php if($row==4) echo "selected";?>>4</option>
                                                       </select>
                                                 </div>
                                           </div>   

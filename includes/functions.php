@@ -1,4 +1,6 @@
 <?php
+if(!function_exists("orangutantheme_nav_menu"))
+{
 function orangutantheme_nav_menu($name)
 {
   global $wpdb;
@@ -93,4 +95,58 @@ function orangutantheme_nav_menu($name)
 
 <?php
 }
+}//orangutantheme_nav_menu
+
+if(!function_exists("orangutantheme_postlayout_frontend"))
+{
+function orangutantheme_postlayout_frontend($col, $row)
+{
+  if ( have_posts() ) :
+    if($col==1)
+    {
+      $nRow = 1;
+
+    while ( have_posts() ) : the_post();  
+    if($nRow <= $row)
+    {      
+      $banner = get_post_meta( get_the_ID(), 'orangutantheme_postbanner', true );
+    ?>
+    <!-- Blog Post -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-6">
+            <a href="<?php echo the_permalink(); ?>">
+              <?php
+              if(!empty($banner)){
+              ?>
+                <img class="img-fluid rounded" src="<?php echo $banner;?>" width="750" height="300" alt="">
+              <?php  
+              }
+              ?>
+            </a>
+          </div>
+          <div class="col-lg-6">
+            <h2 class="card-title"><?php the_title(); ?></h2>
+            <?php wp_trim_words( the_excerpt(), 100); ?>
+            <a href="<?php echo the_permalink(); ?>" class="btn btn-primary">Read More &rarr;</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-muted">
+        <?php the_date(); ?> by
+        <a href="#"><?php the_author(); ?></a>
+      </div>
+    </div>          
+    <?php  
+        $nRow++;
+    }else{
+      break; 
+    }
+    endwhile;
+  }  
+  endif;
+}
+}
+
 ?>

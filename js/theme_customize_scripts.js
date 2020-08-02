@@ -122,6 +122,7 @@ $j(document).ready(function( $ ) {
                         section_layout : layout_choice,
                         section_column : $("#orut-num-col-section"+ section_num).val(),
                         section_row : $("#orut-num-row-section"+ section_num).val(),
+                        title : $("#orut-txt-title-section"+ section_num).val(),
                         nonce : orutajax.nonce 
                     },
             success: function(resp)
