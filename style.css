@@ -34,3 +34,7 @@ body {
 .navbar.is_logged{
 	top:20px;
 }
+
+.hideme{
+  display:none!important;
+}

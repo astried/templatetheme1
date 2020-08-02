@@ -101,6 +101,48 @@ $j(document).ready(function( $ ) {
         }, 2000);
     })
 
+    $(".btn-save-layout").click(function(){
+        var section_num = $(this).attr("data-section");
+        var nav_section = "nav-section" + section_num;
+        var layout_choice = "";
+
+        $(".layout-choice-section" + section_num).each(function(){
+            if( $(this).is(":checked") )
+            {
+                layout_choice = $(this).val();
+            }
+        });
+
+
+        $.ajax({
+            type  : "post",
+            url   :  orutajax.url,
+            data  : {   action: "orangutantheme_update_section_layout",
+                        section_number : section_num,
+                        section_layout : layout_choice,
+                        section_column : $("#orut-num-col-section"+ section_num).val(),
+                        section_row : $("#orut-num-row-section"+ section_num).val(),
+                        nonce : orutajax.nonce 
+                    },
+            success: function(resp)
+                    {
+                        var response = JSON.parse(resp);
+
+                        if(response['code'] == '200' ){
+
+                        }
+                    },
+            error: function(xhr, status, error)
+                        {
+                            console.log( error );
+                        },
+            complete : function(xhr, status, error)
+                        {
+                            
+                        }
+        });           
+    });
+
 function orut_read_slider()
 {
     var list = [];

@@ -5,14 +5,17 @@ if (session_status() == PHP_SESSION_NONE){
 
 if ( !defined( 'ABSPATH' ) ) exit;
 
+//if is_admin
 if( is_user_logged_in() && is_admin() ){
-	$ajax_admin_list = array( "orangutantheme_save_sliders"
-							);
 
-	if(!function_exists("orangutantheme_save_sliders")){
-		function orangutantheme_save_sliders()
-		{
-			$response = array( "code" => "",
+$ajax_admin_list = array( "orangutantheme_save_sliders",
+                              "orangutantheme_update_section_layout"
+				);
+
+if(!function_exists("orangutantheme_save_sliders")){
+      function orangutantheme_save_sliders()
+	{
+		$response = array( "code" => "",
 								"message" => "",
 								"result" => ""
 							);
@@ -59,9 +62,22 @@ if( is_user_logged_in() && is_admin() ){
             }
 
             echo json_encode($response);
-			wp_die();
-		}
+		wp_die();
 	}
+}
+
+if(!function_exists("orangutantheme_update_section_layout")){
+function orangutantheme_update_section_layout()
+{
+      $response = array( "code" => "",
+                        "message" => "",
+                        "result" => ""
+                        );
+
+      echo json_encode($response);
+      wp_die();      
+}// endfunc orangutantheme_update_section_layout
+}
 
 foreach( $ajax_admin_list as $stripe_ajax_gateway_call )
 {
