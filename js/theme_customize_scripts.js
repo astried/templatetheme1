@@ -43,15 +43,26 @@ $j(document).ready(function( $ ) {
 
     $('#orut-btn-upload-slider').click(function() {
        formfield = $('#orut-img-upload-slider').attr('name');
+       wineditor_caller = "orut-img-upload-slider";
+
        tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
        return false;
     });
 
     window.send_to_editor = function(html) {
        imgurl = $('img',html).attr('src');
-       $('#orut-img-upload-slider').val(imgurl);
+       $('#'+ wineditor_caller ).val(imgurl);
        tb_remove();
     }
+
+    $(".orut-uploader").click(function() {
+      var myname = $(this).attr("name");
+       formfield = $('#orut-img-' + myname).attr('name');
+       wineditor_caller = "orut-img-" + myname;
+
+       tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
+       return false;
+    });    
 
     $("#orut-btn-save-slider").click(function(){
         $("#orut-btn-save-slider").hide();

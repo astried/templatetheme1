@@ -1,6 +1,22 @@
 <div class="wrap">
 <h1>Custom Theme Options Page</h1>
 
+<style>
+.layout-box{
+width:100%;
+margin-left:5%;
+margin-top:20px;
+}
+
+img.layout-image{
+margin-left:10%;
+}
+
+div.radio.radio-adjust{
+margin-left:2%;
+}      
+</style>
+
 <!-- Tabs -->
 <section id="tabs">
 	<div class="container">
@@ -10,9 +26,9 @@
 				<nav>
 					<div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
 						<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Slider</a>
-						<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Options2</a>
-						<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">options1</a>
-						<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false">About</a>
+						<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-section1" role="tab" aria-controls="nav-profile" aria-selected="false">Section 1</a>
+						<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-section2" role="tab" aria-controls="nav-contact" aria-selected="false">Section 2</a>
+						<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-section3" role="tab" aria-controls="nav-about" aria-selected="false">Section 3</a>
 					</div>
 				</nav>
 				<div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
@@ -100,8 +116,8 @@
       					</div>
                                     <br>
                                     <div class="row form-group">
-                                          <h3>LIST</h3>
                                           <div class="col-lg-9 mb-9">
+                                          <h3>LIST</h3>      
                                                 <button id="orut-btn-save-slider" class="btn btn-primary" type="button"> Save <i class="fa fa-save"></i></button><img id="orut-btn-save-slider-load" style="display:none;" src="<?php echo get_template_directory_uri(). "/images/loader.gif"; ?>">
                                           </div>
                                     </div>                                    
@@ -143,13 +159,169 @@
       					</div>
 					</div>
 
-					<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                              <?php
+                              
+                              $section1_layout = get_option('orut_frontend_section1_layout');
+                              $section1 = get_option('orut_frontend_section1');
+
+
+
+                              ?>
+
+					<div class="tab-pane fade" id="nav-section1" role="tabpanel" aria-labelledby="nav-section1-tab">
+					<div class="row form-group">
+                              <div class="layout-box">
+                              <div class="row">
+                                    <div class="col-md-3 col-sm-3">
+                                    <div class="radio radio-adjust">
+                                          <label>
+                                          <input type="radio" name="layout-radio" value="card" <?php if($section1_layout != "card-with-title") echo "checked";?>>Card Theme
+                                          <br>
+                                          <img src="<?php echo get_template_directory_uri(). "/images/theme-card.png"; ?>" class="layout-image">
+                                          </label>
+                                    </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3">
+                                    <div class="radio radio-adjust">
+                                          <label><input type="radio" name="layout-radio" value="card-with-title" <?php if($section1_layout == "card-with-title") echo "checked";?>>Card Theme with Title<br>
+                                          <img src="<?php echo get_template_directory_uri(). "/images/theme-card-with-header.png"; ?>">
+                                          </label>
+                                    </div>
+                                    </div>
+                              </div>
+                              </div>
+
+                              <div class="row form-group card-layout">
+                                    <h2>Card</h2>
+                                    <div class="row form-group col-lg-12">
+                                          <div class="col-lg-12 input-group mb-12">
+                                                <input id="orut-img-section1" type="text" class="form-control" placeholder="...">
+                                                <div class="input-group-append">
+                                          <button id="orut-btn-image-section1" class="btn btn-primary orut-uploader" name="section1" type="button">upload</button>
+                                                </div>
+                                          </div>
+                                          <div class="col-lg-12 input-group mb-12"> </div>
+                                    </div>      
+                                    <div class="row form-group col-lg-12">
+                                          <div class="col-lg-12 mb-12">
+                                                <input id="orut-txt-heading-section1" type="text" class="form-control" placeholder="heading">
+                                          </div>
+                                    </div>      
+                                    <div class="row form-group col-lg-12">
+                                          <div class="col-lg-12 mb-12">
+                                                <textarea id="orut-txt-desc-section1" class="form-control">description</textarea>
+                                          </div>
+                                    </div>      
+
+                                    <div class="row form-group col-lg-12">
+                                          <div class="col-lg-12 mb-12">
+                                                <button id="orut-btn-add-section1" name="section1" class="btn btn-primary" type="button">+</button>
+                                          </div>
+                                    </div>
+
+                                    <style>
+                                          #orut-slider-unordered-list{
+                                                padding: 10px;
+                                          }
+
+                                          .orut-slider-list{
+                                                margin: 15px 0;
+                                                padding: 15px 0;
+                                                background-color: #eee;
+                                          }
+
+                                          .orut-img-upload-slider{
+                                                width  : 633px;
+                                                height : 360px;
+                                          }
+
+                                          .btn-drag-list{
+                                                cursor: grab;
+                                          }
+
+                                          .btn-show-slider-image{
+                                                margin:0 5px 0 0;
+                                                cursor: grab;
+                                          }
+
+                                          .btn-remove-list{
+                                                margin:0 0 0 10px;
+                                                cursor: grab;
+                                          }
+                                    </style>
+
+                                    <div class="row orut-slider-list-clone" style="display:none;">
+                                          <div class="row col-lg-12 mb-12">
+                                                <div class="col-lg-5 mb-5">
+                                                      <input type="text" class="orut-txt-heading form-control" placeholder="heading">
+                                                </div>
+                                                <div class="col-lg-5 mb-5">
+                                                      <input type="text" class="form-control orut-txt-subheading" placeholder="sub heading">
+                                                </div>
+                                                <div class="col-lg-2 mb-2 text-right">
+                                                      <span class="btn-show-slider-image"><i class="fa fa-image"></i></span>
+                                                      <span class="btn-drag-list"><i class="fa fa-arrows"></i></span>
+                                                </div>
+                                          </div>
+                                          <div class="row col-lg-12 mb-12 orut-img-div-slider" style="display: none;">
+                                                <div class="col-lg-10 mb-10">
+                                                      <input type="hidden" class="orut-imgurl-slider">
+                                                      <img class="form-control orut-img-slider" style="height:360px;width:633px;">
+                                                </div>
+                                          </div>
+                                    </div>
+                                    <br>
+                                    <div class="row form-group col-lg-12">
+                                          <div class="col-lg-9 mb-9">
+                                          <h3>LIST</h3>      
+                                                <button id="orut-btn-save-slider" class="btn btn-primary" type="button"> Save <i class="fa fa-save"></i></button><img id="orut-btn-save-slider-load" style="display:none;" src="<?php echo get_template_directory_uri(). "/images/loader.gif"; ?>">
+                                          </div>
+                                    </div>                                    
+                                    <div id="orut-slider-unordered-list" class="col-xs-12">
+                                    <?php
+                                    $sliders = get_option('orut_frontend_sliders');
+                                    
+                                    if(!empty($sliders))
+                                    {
+                                          $sliders = (array)unserialize($sliders);
+
+                                          foreach($sliders as $slide){
+                                          ?>
+                                          <div class="row orut-slider-list">
+                                          <div class="row col-lg-12 mb-12">
+                                                <div class="col-lg-5 mb-5">
+                                                      <input type="text" class="orut-txt-heading form-control" placeholder="heading" value="<?php echo $slide['title']; ?>">
+                                                </div>
+                                                <div class="col-lg-5 mb-5">
+                                                      <input type="text" class="form-control orut-txt-subheading" value="<?php echo $slide['subtitle']; ?>">
+                                                </div>
+                                                <div class="col-lg-2 mb-2 text-right">
+                                                      <span class="btn-show-slider-image"><i class="fa fa-image"></i></span>
+                                                      <span class="btn-drag-list"><i class="fa fa-arrows"></i></span>
+                                                      <span class="btn-remove-list"><i class="fa fa-times"></i></span>
+                                                </div>
+                                          </div>
+                                          <div class="row col-lg-12 mb-12 orut-img-div-slider" style="display: none;">
+                                                <div class="col-lg-10 mb-10">
+                                                      <input type="hidden" class="orut-imgurl-slider" value="<?php echo $slide['image']; ?>">
+                                                      <img class="form-control orut-img-slider" style="height:360px;width:633px;" src="<?php echo $slide['image']; ?>">
+                                                </div>
+                                          </div>
+                                          </div>
+                                          <?php      
+                                          }
+                                    }
+                                    ?>
+                                    </div>
+                              </div>
+                              
+                              </div>
+					</div>
+					<div class="tab-pane fade" id="nav-section2" role="tabpanel" aria-labelledby="nav-section2-tab">
 						Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
 					</div>
-					<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-						Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
-					</div>
-					<div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+					<div class="tab-pane fade" id="nav-section3" role="tabpanel" aria-labelledby="nav-section3-tab">
 						Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
 					</div>
 				</div>

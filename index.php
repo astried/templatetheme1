@@ -3,7 +3,7 @@
  <!-- Page Content -->
   <div class="container">
 
-    <h1 class="my-4">Welcome to Modern Business</h1>
+    <h1 class="my-4">Section 1</h1>
 
     <!-- Marketing Icons Section -->
     <div class="row">
@@ -44,7 +44,7 @@
     <!-- /.row -->
 
     <!-- Portfolio Section -->
-    <h2>Portfolio Heading</h2>
+    <h2>Section 2</h2>
 
     <div class="row">
       <div class="col-lg-4 col-sm-6 portfolio-item">
@@ -154,4 +154,4 @@
   <!-- /.container -->
 
 
-<?php get_footer(); ?>
+<?php get_footer(); ?>4 agustis
