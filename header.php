@@ -26,7 +26,7 @@
   <header>
   
   <?php
-     orangutantheme_nav_menu('primary-menu');
+    get_template_part( 'template-parts/nav-menu' );
   ?>
 
   <?php
