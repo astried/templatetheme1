@@ -1,0 +1,21 @@
+/*Post metaboxes*/
+
+.orangutantheme_box{
+  display: grid;
+  grid-template-columns: auto 1fr;
+  padding: 10px;
+}
+
+.orangutantheme_grid{
+  padding: 20px 10px 20px 0;
+  font-size: 1.1rem;
+  width:100%;
+}
+
+.orut-field-post-radio{
+    padding-right:20px;
+}
+
+#orut-postbanner-upload{
+    width: auto;
+}

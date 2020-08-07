@@ -144,6 +144,38 @@ $j(document).ready(function( $ ) {
         });           
     });
 
+    $(".layout-choice").click(function(){
+        var myValue = $(this).val();
+        var mySection ="";
+
+        if($(this).hasClass("layout-choice-section1")){
+            mySection = "section1";
+        }else if($(this).hasClass("layout-choice-section2")){
+            mySection = "section2";
+        }else if($(this).hasClass("layout-choice-section3")){
+            mySection = "section3";   
+        }
+
+        if(myValue=="card"){
+            $("#div-details-"+mySection).show();
+            $("#orut-buttontext-"+mySection).attr("disabled","disabled");
+
+            $("#orut-img-"+mySection).removeAttr("disabled");
+            $("#orut-btn-image-"+mySection).removeAttr("disabled");
+
+        }else if(myValue=="card-with-title"){
+
+            $("#div-details-"+mySection).show();
+            $("#orut-buttontext-"+mySection).removeAttr("disabled");
+
+            $("#orut-img-"+mySection).attr("disabled","disabled");
+            $("#orut-btn-image-"+mySection).attr("disabled","disabled");
+            
+        }else{
+            $("#div-details-"+mySection).hide();
+        }
+    })
+
 function orut_read_slider()
 {
     var list = [];

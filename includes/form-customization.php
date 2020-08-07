@@ -191,7 +191,7 @@ margin-left:2%;
                                           <div class="col-md-3 col-sm-3">
                                           <div class="radio radio-adjust">
                                                 <label>
-                                                <input type="radio" name="layout-radio" value="card" <?php if($section1_layout != "card-with-title") echo "checked";?> class="layout-choice-section1">Card Theme
+                                                <input type="radio" name="layout-radio" value="card" <?php if($section1_layout != "card-with-title") echo "checked";?> class="layout-choice layout-choice-section1">Card Theme
                                                 <br>
                                                 <img src="<?php echo get_template_directory_uri(). "/images/theme-card.png"; ?>" class="layout-image">
                                                 </label>
@@ -200,7 +200,7 @@ margin-left:2%;
 
                                           <div class="col-md-3 col-sm-3">
                                           <div class="radio radio-adjust">
-                                                <label><input type="radio" name="layout-radio" value="card-with-title" <?php if($section1_layout == "card-with-title") echo "checked";?> class="layout-choice-section1">Card Theme with Title<br>
+                                                <label><input type="radio" name="layout-radio" value="card-with-title" <?php if($section1_layout == "card-with-title") echo "checked";?> class="layout-choice layout-choice-section1">Card Theme with Title<br>
                                                 <img src="<?php echo get_template_directory_uri(). "/images/theme-card-with-header.png"; ?>">
                                                 </label>
                                           </div>
@@ -208,7 +208,7 @@ margin-left:2%;
 
                                           <div class="col-md-3 col-sm-3">
                                           <div class="radio radio-adjust">
-                                                <label><input type="radio" name="layout-radio" value="posts" <?php if($section1_layout == "posts") echo "checked";?> class="layout-choice-section1">Show posts<br>
+                                                <label><input type="radio" name="layout-radio" value="posts" <?php if($section1_layout == "posts") echo "checked";?> class="layout-choice layout-choice-section1">Show posts<br>
                                                 <img src="<?php echo get_template_directory_uri(). "/images/grid-rows.png"; ?>">
                                                 </label>
                                           </div>
@@ -225,7 +225,6 @@ margin-left:2%;
                                                             <option value="1" <?php if($col==1) echo "selected";?>>1</option>
                                                             <option value="2" <?php if($col==2) echo "selected";?>>2</option>
                                                             <option value="3" <?php if($col==3) echo "selected";?>>3</option>
-                                                            <option value="4" <?php if($col==4) echo "selected";?>>4</option>
                                                       </select>
                                                 </div>
                                                 <div class="col-lg-6 mb-6">
@@ -252,13 +251,12 @@ margin-left:2%;
 
                               <br><br>
 
-                              <div class="panel panel-default">
+                              <div id="div-details-section1" class="panel panel-default">
                                     <div class="panel-heading"><h2>Layout Details</h2></div>
                               <div class="panel-body">  
                                     <div class="layout-box">
                                           <div class="row">
                                     <!--Details-->            
-                                    <h2>Card</h2>
                                     <div class="row form-group col-lg-12">
                                           <div class="col-lg-12 input-group mb-12">
                                                 <input id="orut-img-section1" type="text" class="form-control" placeholder="...">
@@ -266,7 +264,6 @@ margin-left:2%;
                                           <button id="orut-btn-image-section1" class="btn btn-primary orut-uploader" name="section1" type="button">upload</button>
                                                 </div>
                                           </div>
-                                          <div class="col-lg-12 input-group mb-12"> </div>
                                     </div>      
                                     <div class="row form-group col-lg-12">
                                           <div class="col-lg-12 mb-12">

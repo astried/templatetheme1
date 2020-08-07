@@ -24,7 +24,9 @@ function orangutantheme_save_meta_box( $post_id ) {
     }
     
     $fields = [
-        'orangutantheme_postbanner'
+        'orangutantheme_postbanner',
+        'orangutantheme_blogpost-widget',
+        'orangutantheme_blogpost-comments'
     ];
 
     foreach ( $fields as $field ) {

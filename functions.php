@@ -98,6 +98,8 @@ if(is_admin())
 			                   'nonce' => wp_create_nonce( 'orangutantheme-admin-nonce' )
 			                )
 			         );		
+
+		wp_enqueue_style('theme-admin', get_template_directory_uri(). '/css/admin-style.css');		
 	}
 
 	if(isset($_GET['page']) && $_GET['page'] == "orut_theme-options" ){
