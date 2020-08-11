@@ -140,6 +140,8 @@ if( is_user_logged_in() && is_admin() ){
 
 
                         update_option('orut_layout_details_section'.$section_number, serialize($cleaned_items));
+                  }else{
+                      update_option('orut_layout_details_section'.$section_number, "");      
                   }                  
             }//else nonce
 
@@ -155,6 +157,9 @@ if( is_user_logged_in() && is_admin() ){
 }//if is_admin
 else if ( ! is_admin() ) 
 {
+
+}
+
       if(!function_exists("orangutantheme_add_comment")){
       function orangutantheme_add_comment()
       {
@@ -209,7 +214,62 @@ else if ( ! is_admin() )
       }
       }
 
-      $ajax_list = array( 'orangutantheme_add_comment'
+      if(!function_exists('orangutantheme_reply_comment')){
+      function orangutantheme_reply_comment()
+      {
+            $response = array( "code" => "",
+                              "message" => "",
+                              "result" => ""
+                              );
+
+            $nonce = sanitize_text_field($_POST['nonce']);
+                      
+            if( !wp_verify_nonce( $nonce, 'orangutantheme-nonce' ) ){
+                  $response['code'] = "500";
+                  $response['message'] = "nonce is not recognize";
+            }else{            
+
+                  $time = current_time('mysql');
+                  
+                  $userid = sanitize_text_field($_POST['user_id']);
+                  $url = "";
+                  $email = "";
+                  $userlogin = "";
+
+                  $WPUser = get_userdata( $userid );
+
+                  if(!empty($WPUser))
+                  {
+                        $url = $WPUser->data->user_url;
+                        $email = $WPUser->data->user_email;
+                        $userlogin =  $WPUser->data->user_login;
+                  }
+
+                  $data = array(
+                        'comment_post_ID' => sanitize_text_field($_POST['post_id']),
+                        'comment_author' => $userlogin,
+                        'comment_author_email' => $email,
+                        'comment_author_url' => $url,
+                        'comment_content' => sanitize_text_field($_POST['content']),
+                        'comment_type' => '',
+                        'comment_parent' => sanitize_text_field($_POST['parent']),
+                        'user_id' => $userid,
+                        'comment_author_IP' => sanitize_text_field($_POST['ip_address']),
+                        'comment_agent' => '',
+                        'comment_date' => $time,
+                        'comment_approved' => 0,
+                  );
+
+                  wp_insert_comment($data);
+            }
+
+            echo json_encode($response);
+            wp_die();   
+      }            
+      }
+
+      $ajax_list = array( 'orangutantheme_add_comment',
+                          'orangutantheme_reply_comment'
                         );
 
       foreach( $ajax_list as $ajax_caller )
@@ -217,5 +277,4 @@ else if ( ! is_admin() )
           add_action( "wp_ajax_" . $ajax_caller, $ajax_caller );
           add_action( "wp_ajax_priv_" . $ajax_caller, $ajax_caller );
       }
-}
 ?>

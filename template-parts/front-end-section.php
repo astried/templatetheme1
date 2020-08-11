@@ -159,14 +159,18 @@ function orangutantheme_cardlayout_frontend($section, $col, $row)
 {
   $details = get_option('orut_layout_details_section'. $section);
   
-  if(!empty($details)){
+  if(!empty($details))
+  {
     $details = (array)unserialize($details);
     
     $itemLimit = $col * $row;
+    $nItem = 1;
 
     if( $col == 1 ){
       foreach($details as $detail)
       {
+        if( $nItem > $itemLimit ) break;
+
         $detail = (array)$detail;
       ?>
        <div class="row">
@@ -183,13 +187,16 @@ function orangutantheme_cardlayout_frontend($section, $col, $row)
         </div>
         </div>     
         <?php
-        }
-      }else if( $col == 2 ){
+        $nItem++;
+      }
+    }else if( $col == 2 ){
        ?>
       <div class="row">
       <?php
       foreach($details as $detail)
       {
+        if( $nItem > $itemLimit ) break;
+
         $detail = (array)$detail;
       ?>
       <div class="col-lg-6 portfolio-item">
@@ -204,6 +211,7 @@ function orangutantheme_cardlayout_frontend($section, $col, $row)
         </div>
       </div>
       <?php
+        $nItem++;
       }
       ?>
       </div>     
@@ -214,6 +222,8 @@ function orangutantheme_cardlayout_frontend($section, $col, $row)
       <?php
       foreach($details as $detail)
       {
+        if( $nItem > $itemLimit ) break;
+
         $detail = (array)$detail;
       ?>
       <div class="col-lg-4 portfolio-item">
@@ -228,6 +238,7 @@ function orangutantheme_cardlayout_frontend($section, $col, $row)
         </div>
       </div>
       <?php
+        $nItem++;
       }
       ?>
       </div>     
@@ -238,6 +249,8 @@ function orangutantheme_cardlayout_frontend($section, $col, $row)
       <?php
       foreach($details as $detail)
       {
+        if( $nItem > $itemLimit ) break;
+
         $detail = (array)$detail;
       ?>
       <div class="col-lg-3 portfolio-item">
@@ -252,6 +265,7 @@ function orangutantheme_cardlayout_frontend($section, $col, $row)
         </div>
       </div>
       <?php
+        $nItem++;
       }
       ?>
       </div>     
@@ -266,7 +280,120 @@ if(!function_exists("orangutantheme_cardtitlelayout_frontend"))
 {
 function orangutantheme_cardtitlelayout_frontend($section, $col, $row)
 {
+  $details = get_option('orut_layout_details_section'. $section);
+  
+  if(!empty($details)){
+    $details = (array)unserialize($details);
+    
+    $itemLimit = $col * $row;
+    $nItem = 1;
 
+    if($col==1){
+      foreach($details as $detail)
+      {
+        if( $nItem > $itemLimit ) break;
+
+        $detail = (array)$detail;
+      ?>  
+      <div class="row">
+      <div class="col-lg-12 mb-4">
+        <div class="card h-100">
+          <h4 class="card-header"><?php echo $detail["heading"];?></h4>
+          <div class="card-body">
+            <?php echo $detail["desc"];?>
+          </div>
+          <div class="card-footer">
+            <a href="<?php echo $detail["link"];?>" class="btn btn-primary"><?php echo $detail["button"];?></a>
+          </div>
+        </div>
+      </div>      
+      </div>
+      <?php
+        $nItem++;
+      }
+    }else if($col==2){
+    ?>
+      <div class="row">
+    <?php  
+      foreach($details as $detail)
+      {
+        if( $nItem > $itemLimit ) break;
+
+        $detail = (array)$detail;
+      ?>  
+      <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+          <h4 class="card-header"><?php echo $detail["heading"];?></h4>
+          <div class="card-body">
+            <?php echo $detail["desc"];?>
+          </div>
+          <div class="card-footer">
+            <a href="<?php echo $detail["link"];?>" class="btn btn-primary"><?php echo $detail["button"];?></a>
+          </div>
+        </div>
+      </div>      
+      <?php
+        $nItem++;
+      }
+    ?>
+      </div>
+    <?php        
+    }else if($col==3){
+    ?>
+      <div class="row">
+    <?php  
+      foreach($details as $detail)
+      {
+        if( $nItem > $itemLimit ) break;
+
+        $detail = (array)$detail;
+      ?>  
+      <div class="col-lg-4 mb-4">
+        <div class="card h-100">
+          <h4 class="card-header"><?php echo $detail["heading"];?></h4>
+          <div class="card-body">
+            <?php echo $detail["desc"];?>
+          </div>
+          <div class="card-footer">
+            <a href="<?php echo $detail["link"];?>" class="btn btn-primary"><?php echo $detail["button"];?></a>
+          </div>
+        </div>
+      </div>      
+      <?php
+        $nItem++;
+      }
+    ?>
+      </div>
+    <?php  
+    }else if($col==4){
+    ?>
+      <div class="row">
+    <?php  
+      foreach($details as $detail)
+      {
+        if( $nItem > $itemLimit ) break;
+
+        $detail = (array)$detail;
+      ?>  
+      <div class="col-lg-3 mb-4">
+        <div class="card h-100">
+          <h4 class="card-header"><?php echo $detail["heading"];?></h4>
+          <div class="card-body">
+            <?php echo $detail["desc"];?>
+          </div>
+          <div class="card-footer">
+            <a href="<?php echo $detail["link"];?>" class="btn btn-primary"><?php echo $detail["button"];?></a>
+          </div>
+        </div>
+      </div>      
+      <?php
+        $nItem++;
+      }
+    ?>
+      </div>
+    <?php  
+    }//if col
+  }//details are not empty
 }
 }
 

@@ -19,6 +19,23 @@ $j(document).ready(function( $ ) {
                 }
     });
 
+    $("#orut-list-details-section1").sortable({
+        placeholder: ".orut-list-details-section1 div",
+        helper    : "clone",
+        revert    : true,
+        forcePlaceholderSize: true,
+        axis    : 'y',
+        start: function (e, ui) {         
+                },
+        update: function (e, ui) {
+                },
+        stop: function(e, ui){
+                 
+                },
+        received: function(e, ui){
+                }
+    });    
+
     orut_sliderimage_toggle();
     orut_upload_images();
     orut_section1_save();
@@ -251,26 +268,22 @@ function orut_section1_toggle()
 
 function orut_read_list( section_number )
 {
-    //orut-img-section1
-    //orut-txt-heading-section1
-    //orut-txt-desc-section1
-    //orut-txt-btn-section1
-    //orut-link-section1
-
     var theList = [];
     var temp = {};
 
-    $(".orut-list-details-section" + section_number).each(function(){
-        temp = {};
+    if( $(".orut-list-details-section" + section_number).length > 0 ){
+        $(".orut-list-details-section" + section_number).each(function(){
+            temp = {};
 
-        temp.image = $(this).find(".orut-img-section"+section_number).val();
-        temp.heading = $(this).find(".orut-txt-heading-section"+section_number).val();
-        temp.desc = $(this).find(".orut-txt-desc-section"+section_number).val();
-        temp.button = $(this).find(".orut-txt-btn-section"+section_number).val();
-        temp.link = $(this).find(".orut-link-section"+section_number).val();
+            temp.image = $(this).find(".orut-img-section"+section_number).val();
+            temp.heading = $(this).find(".orut-txt-heading-section"+section_number).val();
+            temp.desc = $(this).find(".orut-txt-desc-section"+section_number).val();
+            temp.button = $(this).find(".orut-txt-btn-section"+section_number).val();
+            temp.link = $(this).find(".orut-link-section"+section_number).val();
 
-        theList.push(temp);
-    });
+            theList.push(temp);
+        });
+    }
 
     return theList;
 }
@@ -289,9 +302,9 @@ function orut_section1_save()
             url   :  orutajax.url,
             data  : {   action: "orangutantheme_update_section_list",
                         section_number : section_num,
-                        section_items : list_items,
+                        section_items  : list_items,
                         section_column : $("#orut-num-col-section"+ section_num).val(),
-                        section_row : $("#orut-num-row-section"+ section_num).val(),
+                        section_row    : $("#orut-num-row-section"+ section_num).val(),
                         title : $("#orut-txt-title-section"+ section_num).val(),
                         nonce : orutajax.nonce 
                     },

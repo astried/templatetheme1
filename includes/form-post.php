@@ -35,8 +35,8 @@
     <div class="orangutantheme_grid"><label class="orangutantheme_grid">Comments</label></div>
     <div class="orangutantheme_grid">
          <div class="meta-options orangutantheme_field">
-            <label class="orut-field-post-radio"><input type="radio" value="on" name="orangutantheme_blogpost-comments"> ON</label>
-            <label class="orut-field-post-radio"><input type="radio" value="off" name="orangutantheme_blogpost-comments"> OFF</label>
+            <label class="orut-field-post-radio"><input <?php if($commentOn=="on") echo "checked";?> type="radio" value="on" name="orangutantheme_blogpost-comments"> ON</label>
+            <label class="orut-field-post-radio"><input <?php if($commentOn!="on") echo "checked";?> type="radio" value="off" name="orangutantheme_blogpost-comments"> OFF</label>
         </div>
     </div>
 </div>

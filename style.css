@@ -38,3 +38,13 @@ body {
 .hideme{
   display:none!important;
 }
+
+img.avatar-img{
+  width:64px;
+  height:64px;
+}
+
+.card.comment-reply{
+  margin-left:30px;
+  width:95%;
+}

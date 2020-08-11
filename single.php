@@ -160,8 +160,10 @@ $display_name = get_the_author_meta( 'display_name' , $author_id );
               <textarea id="orangutan_blogpost-comment" class="form-control" rows="3"></textarea>
             </div>
             <button id="orangutan_comment-savebtn" class="btn btn-primary">Submit</button>
+            <span id="orangutan_comment-savebtn-loader" style="display:none;">sending <img src="<?php echo get_template_directory_uri() . "/images/loader.gif";?>"></span>
           </div>
         </div>
+        <hr><br>
 
       <?php
         $comments = get_comments(array(
@@ -169,14 +171,112 @@ $display_name = get_the_author_meta( 'display_name' , $author_id );
            'status' => 'approve'
         ));
 
-        foreach($comments as $comment) {
+        $ori_comment = array(); $i = 0;
+        $reply_comment = array();
+        $comment_reply = array();
+
+        foreach($comments as $comment)
+        {
+          $userid = $comment->user_id;
+          $author = $comment->comment_author;
+          $content = $comment->comment_content;
+          $id = $comment->comment_ID;
+          $parent = $comment->comment_parent;
+
+          if( !empty($parent) ){
+            if( !isset($comment_reply[$parent]) ){
+              $comment_reply[$parent] = array();
+            }
+
+            $comment_reply[$parent][] = $id;
+
+            $reply_comment[$id] = array();
+            $reply_comment[$id]['userid'] = $userid;
+            $reply_comment[$id]['author'] = $author;
+            $reply_comment[$id]['content'] = $content;
+            $reply_comment[$id]['id'] = $id;
+            
+          }//if not empty parent
+          else{
+            $ori_comment[$i] = array();
+            $ori_comment[$i]['userid'] = $userid;
+            $ori_comment[$i]['author'] = $author;
+            $ori_comment[$i]['content'] = $content;
+            $ori_comment[$i]['id'] = $id;
+            $i++; 
+          }
+        }
+
+        //rsort($ori_comment);
+
+        foreach($ori_comment as $comment)
+        {
+          $userid = $comment['userid'];
+          $avatar = get_avatar_url( $userid );
+
+          $id = $comment['id'];
+
+          if(empty($avatar)){
+            $avatar = "http://placehold.it/50x50";
+          }
         ?>
         <!-- Single Comment -->
         <div class="media mb-4">
-          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+          <img class="d-flex mr-3 avatar-img rounded-circle" src="<?php echo $avatar;?>" alt="<?php echo $comment['author'];?>">
           <div class="media-body">
-            <h5 class="mt-0"><?php echo $comment->comment_author; ?></h5>
-            <?php echo esc_html($comment->comment_content); ?>
+            <h5 class="mt-0"><?php echo $comment['author']; ?></h5>
+            <div class="row">
+              <div class="col-lg-12 mb-4">
+                <?php echo esc_html($comment['content']); ?>
+              </div>            
+            </div>  
+
+            <?php
+            if( isset($comment_reply[$id]) && (count($comment_reply[$id]) > 0) ){
+              $replies = (array)$comment_reply[$id];
+              sort($replies);
+
+              foreach($replies as $replyid)
+              {
+                if(isset($reply_comment[$replyid]))
+                {
+                  $userid = $reply_comment[$replyid]['userid'];
+                  $avatar = get_avatar_url( $userid );
+                  ?>
+                  <!--Replies-->
+                  <div class="media mb-4">
+                    <img class="d-flex mr-3 avatar-img rounded-circle" src="<?php echo $avatar;?>" alt="<?php echo $reply_comment[$replyid]['author'];?>">
+                    <div class="media-body">
+                      <h5 class="mt-0"><?php echo $reply_comment[$replyid]['author']; ?></h5>
+                      <div class="row">
+                        <div class="col-lg-12 mb-4">
+                          <?php echo esc_html($reply_comment[$replyid]['content']); ?>
+                        </div>
+                      </div>  
+                    </div>
+                  </div>
+                  <!--Replies-->
+                  <?php
+                }//if isset
+              }
+            }
+            ?>
+
+            <div class="row">
+            <div class="col-lg-12 mb-4">
+                <button id="orangutan_comment-<?php echo $id;?>" class="btn btn-default orangutan_comment-show"><span>Reply</span> <i class="fa fa-comments-o" aria-hidden="true"></i></button>
+            </div>  
+              <div id="orangutan_comment-<?php echo $id;?>-reply" style="display:none;" class="comment-reply card my-4">
+                <div class="card-body">
+                  <div class="form-group">
+                    <textarea id="orangutan_comment-reply-<?php echo $comment['id'];?>" class="form-control" rows="3"></textarea>
+                  </div>
+                  <button id="orangutan_replybtn-<?php echo $comment['id'];?>" data-targetid="<?php echo $comment['id'];?>" class="orangutan_comment-savebtn btn btn-primary">Reply</button>
+                  <span id="orangutan_replybtn-<?php echo $comment['id'];?>-loader" style="display:none;">sending <img src="<?php echo get_template_directory_uri() . "/images/loader.gif";?>"></span>
+                </div>
+              </div>              
+            </div>
+
           </div>
         </div>        
         <?php  

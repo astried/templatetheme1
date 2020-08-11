@@ -116,6 +116,7 @@ if(is_admin())
 
 		wp_enqueue_style('theme-style', get_stylesheet_uri() );
 		wp_enqueue_style('theme-bootstrap', get_template_directory_uri(). '/vendor/bootstrap4/css/bootstrap.css' );
+		wp_enqueue_style('theme-font-awesome', get_template_directory_uri(). '/css/font-awesome/css/font-awesome.css');
 
 		wp_enqueue_script('theme-bootstrap', get_template_directory_uri(). '/vendor/bootstrap4/js/bootstrap.js' );
 		wp_enqueue_script('theme-bootstrap-bundle', get_template_directory_uri(). '/vendor/bootstrap4/js/bootstrap.bundle.js' );
