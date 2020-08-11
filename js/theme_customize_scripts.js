@@ -20,6 +20,9 @@ $j(document).ready(function( $ ) {
     });
 
     orut_sliderimage_toggle();
+    orut_upload_images();
+    orut_section1_save();
+    orut_section1_toggle();
 
     $("#orut-btn-add-slider").click(function(){
     	var newheading = $("#orut-txt-heading").val();
@@ -51,7 +54,14 @@ $j(document).ready(function( $ ) {
 
     window.send_to_editor = function(html) {
        imgurl = $('img',html).attr('src');
-       $('#'+ wineditor_caller ).val(imgurl);
+
+        if(wineditor_caller=="orut-img-upload-slider"){
+           $('#'+ wineditor_caller ).val(imgurl);        
+        }else{
+            alert(imgurl);
+           $('#'+ wineditor_caller ).closet(".disp-section1-list").find(".orut-img-section1").val(imgurl);
+        }
+       
        tb_remove();
     }
 
@@ -106,13 +116,15 @@ $j(document).ready(function( $ ) {
         var nav_section = "nav-section" + section_num;
         var layout_choice = "";
 
+        $('#orut-btn-save-layout-section'+ section_num).hide();
+        $('#orut-layout-loader'+ section_num).show();
+
         $(".layout-choice-section" + section_num).each(function(){
             if( $(this).is(":checked") )
             {
                 layout_choice = $(this).val();
             }
         });
-
 
         $.ajax({
             type  : "post",
@@ -141,7 +153,14 @@ $j(document).ready(function( $ ) {
                         {
                             
                         }
-        });           
+        }); 
+
+        setTimeout(function(){
+                $('#orut-btn-save-layout-section'+ section_num).show();
+                $('#orut-layout-loader'+ section_num).hide();    
+            }, 2000
+        );
+
     });
 
     $(".layout-choice").click(function(){
@@ -175,6 +194,166 @@ $j(document).ready(function( $ ) {
             $("#div-details-"+mySection).hide();
         }
     })
+
+    $(".orut-btn-add-section").click(function(){
+        var section = "";
+
+        if($(this).hasClass("section1")){
+            section = "1";
+        }else if($(this).hasClass("section2")){
+            section = "2";
+        }else{
+            section = "3";
+        }
+
+        var newheading = $("#orut-txt-heading-section"+section).val();
+        var newdesc = $("#orut-txt-desc-section"+section).val();
+        var newimg = $("#orut-img-section"+section).val();   
+        var newbtntext = $("#orut-txt-btn-section"+section).val();
+        var newurl = $("#orut-link-section"+section).val(); 
+        
+        $(".orut-list-details-section"+section+"-clone").clone().prependTo("#orut-list-details-section"+section);        
+    
+        var newthing = $("#orut-list-details-section"+section).find(".orut-list-details-section"+section+"-clone");
+
+        newthing.find(".orut-txt-heading-section"+section).val(newheading);
+        newthing.find(".orut-lbl-heading-section"+section).text(newheading);
+        newthing.find(".orut-txt-desc-section"+section).val(newdesc);
+        newthing.find(".orut-txt-btn-section"+section).val(newbtntext);
+        newthing.find(".orut-link-section"+section).val(newurl);
+        newthing.find(".orut-img-section"+section).val(newimg);
+        newthing.find(".orut-disp-section"+section).attr("src",newimg);
+
+        var num = Number($("#orut-list-length-section"+section).val()) + 1;
+        newthing.find(".orut-img-list-uploader").attr("id", "orut-img-section"+section+"-"+num);
+        newthing.find(".orut-img-section"+section).attr("id", "txt-orut-img-section"+section+"-"+num);
+
+        $("#orut-list-length-section"+section).val(num);
+
+        newthing.removeClass("orut-list-details-section"+section+"-clone");
+        newthing.addClass("orut-list-details-section"+section);
+        newthing.show();
+
+        orut_section1_toggle();
+        orut_upload_images();
+    });
+
+function orut_section1_toggle()
+{
+    $(".btn-toggle-section1-list").click(function(){
+        $(this).closest(".orut-list-details-section1").find(".disp-section1-list").toggle();
+    });    
+
+    $(".btn-remove-section1-list").click(function(){
+        $(this).closest(".orut-list-details-section1").remove();
+    });  
+}
+
+function orut_read_list( section_number )
+{
+    //orut-img-section1
+    //orut-txt-heading-section1
+    //orut-txt-desc-section1
+    //orut-txt-btn-section1
+    //orut-link-section1
+
+    var theList = [];
+    var temp = {};
+
+    $(".orut-list-details-section" + section_number).each(function(){
+        temp = {};
+
+        temp.image = $(this).find(".orut-img-section"+section_number).val();
+        temp.heading = $(this).find(".orut-txt-heading-section"+section_number).val();
+        temp.desc = $(this).find(".orut-txt-desc-section"+section_number).val();
+        temp.button = $(this).find(".orut-txt-btn-section"+section_number).val();
+        temp.link = $(this).find(".orut-link-section"+section_number).val();
+
+        theList.push(temp);
+    });
+
+    return theList;
+}
+
+function orut_section1_save()
+{
+    $("#orut-btn-details-section1").click(function(){
+        var section_num = "1";
+        var list_items = orut_read_list( section_num );
+
+        $(this).hide();
+        $("#orut-load-details-section1").show();
+
+        $.ajax({
+            type  : "post",
+            url   :  orutajax.url,
+            data  : {   action: "orangutantheme_update_section_list",
+                        section_number : section_num,
+                        section_items : list_items,
+                        section_column : $("#orut-num-col-section"+ section_num).val(),
+                        section_row : $("#orut-num-row-section"+ section_num).val(),
+                        title : $("#orut-txt-title-section"+ section_num).val(),
+                        nonce : orutajax.nonce 
+                    },
+            success: function(resp)
+                    {
+                        var response = JSON.parse(resp);
+
+                        if(response['code'] == '200' ){
+
+                        }
+                    },
+            error: function(xhr, status, error)
+                        {
+                            console.log( error );
+                        },
+            complete : function(xhr, status, error)
+                        {
+                            
+                        }
+        }); 
+
+        setTimeout(function(){
+            $("#orut-btn-details-section1").show();
+            $("#orut-load-details-section1").hide();                
+        }, 2000);
+    });  
+}
+
+function orut_upload_images()
+{
+    $(".orut-img-list-uploader").click(function() {
+        var myID = $(this).attr("id");
+
+        formfield = $(this).find('#txt--' + myID).attr('name');
+        wineditor_caller = myID;
+
+        tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
+        return false;        
+    });
+
+    $(".orut-uploader").click(function() {
+        var section = $(this).attr("name");
+
+        formfield = $(this).find('.orut-img-'+section).attr('name');
+        wineditor_caller = $(this).attr("id");
+
+        tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
+        return false;        
+    });
+
+    window.send_to_editor = function(html) {
+       imgurl = $('img',html).attr('src');
+
+        if(wineditor_caller=="orut-img-upload-slider"){
+           $('#'+ wineditor_caller ).val(imgurl);        
+        }else{
+           $('#txt-'+ wineditor_caller ).val(imgurl);
+        }
+       
+       tb_remove();
+    }      
+}
 
 function orut_read_slider()
 {

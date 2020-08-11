@@ -3,6 +3,20 @@
 <?php
 
 $post_id = get_the_ID(); 
+$user_id = "";
+$ipaddress = "";
+
+if(is_user_logged_in()){
+  $user_id = get_current_user_id();
+}
+
+if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+  $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+  $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+} else {
+  $ipaddress = $_SERVER['REMOTE_ADDR'];
+}  
 
 $banner = get_post_meta( $post_id, 'orangutantheme_postbanner', true );
 $blogWidget = get_post_meta( $post_id, 'orangutantheme_blogpost-widget', true );
@@ -133,21 +147,23 @@ $display_name = get_the_author_meta( 'display_name' , $author_id );
       ?>
       
       <!-- Comments Form -->      
-      <?php if($isComment=="on"): ?>
+      <?php if($isComment=="on"): 
+      ?>
+        <input type="hidden" id="orangutan_blogpost-id" value="<?php echo $post_id;?>">
+        <input type="hidden" id="orangutan_blogpost-user-id" value="<?php echo $user_id;?>">
+        <input type="hidden" id="orangutan_blogpost-ipaddress" value="<?php echo $ipaddress;?>">
+
         <div class="card my-4">
           <h5 class="card-header">Leave a Comment:</h5>
           <div class="card-body">
-            <form>
-              <div class="form-group">
-                <textarea class="form-control" rows="3"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            <div class="form-group">
+              <textarea id="orangutan_blogpost-comment" class="form-control" rows="3"></textarea>
+            </div>
+            <button id="orangutan_comment-savebtn" class="btn btn-primary">Submit</button>
           </div>
         </div>
 
       <?php
-
         $comments = get_comments(array(
           'post_id' => $post_id,
            'status' => 'approve'

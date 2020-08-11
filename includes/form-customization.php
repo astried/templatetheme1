@@ -173,7 +173,6 @@ margin-left:2%;
                               if(isset($index[1])) $row = $index[1];
 
                               $post_grid = "";
-
                               ?>
 
 					<div class="tab-pane fade" id="nav-section1" role="tabpanel" aria-labelledby="nav-section1-tab">
@@ -225,6 +224,7 @@ margin-left:2%;
                                                             <option value="1" <?php if($col==1) echo "selected";?>>1</option>
                                                             <option value="2" <?php if($col==2) echo "selected";?>>2</option>
                                                             <option value="3" <?php if($col==3) echo "selected";?>>3</option>
+                                                            <option value="4" <?php if($col==4) echo "selected";?>>4</option>
                                                       </select>
                                                 </div>
                                                 <div class="col-lg-6 mb-6">
@@ -240,18 +240,19 @@ margin-left:2%;
                                     </div>
 
                                     <div class="row form-group layout-box">
-                                          <div class="col-lg-12 mb-12">
+                                    <div class="col-lg-12 mb-12">
                                           <div class="col-lg-12 mb-12">      
-                                          <button id="orut-btn-save-layout-section1" data-section="1" class="btn btn-primary btn-save-layout" type="button">Save Layout <i class="fa fa-save"></i></button>
+                                                <button id="orut-btn-save-layout-section1" data-section="1" class="btn btn-primary btn-save-layout" type="button">Save Layout <i class="fa fa-save"></i></button>
+                                                <span id="orut-layout-loader1" style="display:none;">processing <img src="<?php echo get_template_directory_uri(). "/images/loader.gif"; ?>"></span>
                                           </div>
-                                          </div>
+                                    </div>
                                     </div>
                               </div><!--panelbody-->
                               </div><!--panel-->
 
                               <br><br>
 
-                              <div id="div-details-section1" class="panel panel-default">
+                              <div id="div-details-section1" class="panel panel-default" <?php if($section1_layout == "posts") echo "style='display:none;'";?>>
                                     <div class="panel-heading"><h2>Layout Details</h2></div>
                               <div class="panel-body">  
                                     <div class="layout-box">
@@ -277,7 +278,7 @@ margin-left:2%;
                                     </div>
                                     <div class="row form-group col-lg-12">
                                           <div class="col-lg-12 mb-12">
-                                                <input id="orut-buttontext-section1" type="text" class="form-control" placeholder="button text">
+                                                <input id="orut-txt-btn-section1" type="text" class="form-control" placeholder="button text">
                                           </div>
                                     </div>  
                                     <div class="row form-group col-lg-12">
@@ -287,73 +288,119 @@ margin-left:2%;
                                     </div>     
                                     <div class="row form-group col-lg-12">
                                           <div class="col-lg-12 mb-12">
-                                                <button id="orut-btn-add-section1" name="section1" class="btn btn-primary" type="button">+</button>
+                                                <button id="orut-btn-add-section1" name="section1" class="btn btn-primary orut-btn-add-section section1" type="button">+</button>
                                           </div>
                                     </div>
 
                                     <style>
-                                          #orut-slider-unordered-list{
-                                                padding: 10px;
-                                          }
-
-                                          .orut-slider-list{
-                                                margin: 15px 0;
-                                                padding: 15px 0;
-                                                background-color: #eee;
-                                          }
-
-                                          .orut-img-upload-slider{
-                                                width  : 633px;
-                                                height : 360px;
-                                          }
-
-                                          .btn-drag-list{
-                                                cursor: grab;
-                                          }
-
-                                          .btn-show-slider-image{
-                                                margin:0 5px 0 0;
-                                                cursor: grab;
-                                          }
-
-                                          .btn-remove-list{
-                                                margin:0 0 0 10px;
-                                                cursor: grab;
-                                          }
+                                    .orut-list-details-section1{
+                                          padding: 20px 5px;
+                                          background-color: #eee;
+                                          margin: 0 0 20px;
+                                    }
                                     </style>
 
-                                    <div class="row orut-slider-list-clone" style="display:none;">
-                                          <div class="row col-lg-12 mb-12">
-                                                <div class="col-lg-5 mb-5">
-                                                      <input type="text" class="orut-txt-heading form-control" placeholder="heading">
+                                    <div class="row orut-list-details-section1-clone col-lg-12" style="display:none;">
+                                          <div class="row mb-3 col-lg-12">
+                                                <div class="col">
+                                                      <label class="orut-lbl-heading-section1"></label>
                                                 </div>
-                                                <div class="col-lg-5 mb-5">
-                                                      <input type="text" class="form-control orut-txt-subheading" placeholder="sub heading">
-                                                </div>
-                                                <div class="col-lg-2 mb-2 text-right">
-                                                      <span class="btn-show-slider-image"><i class="fa fa-image"></i></span>
-                                                      <span class="btn-drag-list"><i class="fa fa-arrows"></i></span>
+                                                <div class="col">
+                                                      <span class="btn btn-drag-section1-list float-right"><i class="fa fa-arrows"></i></span>
+                                                      <button class="btn btn-remove-section1-list float-right"><i class="fa fa-times"></i></button>
+                                                      <button class="btn btn-toggle-section1-list float-right"><i class="fa fa-caret-down"></i></button>
                                                 </div>
                                           </div>
-                                          <div class="row col-lg-12 mb-12 orut-img-div-slider" style="display: none;">
-                                                <div class="col-lg-10 mb-10">
-                                                      <input type="hidden" class="orut-imgurl-slider">
-                                                      <img class="form-control orut-img-slider" style="height:360px;width:633px;">
-                                                </div>
+
+                                          <div class="row mb-3 col-lg-12 disp-section1-list" style="display:none;">
+                                                      <div class="col-lg-5">
+                                                            <img class="orut-disp-section1" width="400" height="400" src="<?php echo get_template_directory_uri(). "/images/400x400.png"; ?>">
+                                                      </div>
+                                                      <div class="col-lg-7"> 
+                                                            <div class="col-lg-12 input-group mb-4">
+                                                                  <input id="txt-orut-img-section1-1" type="text" class="orut-img-section1 form-control" placeholder="...">
+                                                                  <div class="input-group-append">
+                                                                        <button id="orut-img-section1-1" class="btn btn-primary orut-img-list-uploader" name="section1" type="button">upload</button>
+                                                                  </div>
+                                                            </div>
+                                                            <div class="col-lg-12 mb-4">
+                                                                  <input type="text" class="form-control orut-txt-heading-section1" placeholder="heading">
+                                                            </div>
+                                                            <div class="col-lg-12 mb-4">
+                                                                  <textarea class="orut-txt-desc-section1 form-control"></textarea>
+                                                            </div>
+                                                            <div class="col-lg-12 mb-4">
+                                                                  <input type="text" class="form-control orut-txt-btn-section1" placeholder="button text">
+                                                            </div>
+                                                            <div class="col-lg-12 mb-1">
+                                                                  <input type="text" class="form-control orut-link-section1" placeholder="url">
+                                                            </div>   
+                                                      </div>
                                           </div>
-                                    </div>
+                                    </div><!--list-->
                                     <br>
+
                                     <div class="row form-group col-lg-12">
                                           <div class="col-lg-9 mb-9">
                                           <h3>LIST</h3>      
-                                                <button id="orut-btn-save-slider" class="btn btn-primary" type="button"> Save <i class="fa fa-save"></i></button><img id="orut-btn-save-slider-load" style="display:none;" src="<?php echo get_template_directory_uri(). "/images/loader.gif"; ?>">
+                                                <button id="orut-btn-details-section1" class="btn btn-primary" type="button"> Save <i class="fa fa-save"></i></button><img id="orut-load-details-section1" style="display:none;" src="<?php echo get_template_directory_uri(). "/images/loader.gif"; ?>">
                                           </div>
                                     </div>                                    
-                                    <div id="orut-slider-unordered-list" class="col-xs-12">
+                                    <div id="orut-list-details-section1" class="col-lg-12 mb-12">
                                     <?php
- 
+                                    $listID = 0;
+                                    $section1_details_layout = get_option('orut_layout_details_section1');
+                                    
+                                    if(!empty($section1_details_layout)){
+                                       $section1_details_layout = (array)unserialize($section1_details_layout);
+                                    }
+
+                                    foreach($section1_details_layout as $detail)
+                                    {
+                                    ?>
+                                    <div class="row orut-list-details-section1 col-lg-12">
+                                          <div class="row mb-3 col-lg-12">
+                                                <div class="col">
+                                                      <label class="orut-lbl-heading-section1"><?php echo $detail['heading'];?></label>
+                                                </div>
+                                                <div class="col">
+                                                      <span class="btn btn-drag-section1-list float-right"><i class="fa fa-arrows"></i></span>
+                                                      <button class="btn btn-remove-section1-list float-right"><i class="fa fa-times"></i></button>
+                                                      <button class="btn btn-toggle-section1-list float-right"><i class="fa fa-caret-down"></i></button>
+                                                </div>
+                                          </div>
+
+                                          <div class="row mb-3 col-lg-12 disp-section1-list" style="display:none;">
+                                                      <div class="col-lg-5">
+                                                            <img class="orut-disp-section1" width="400" height="400" src="<?php if(empty($detail['image'])) echo get_template_directory_uri(). "/images/400x400.png"; else echo $detail['image'];?>">
+                                                      </div>
+                                                      <div class="col-lg-7"> 
+                                                            <div class="col-lg-12 input-group mb-4">
+                                                                  <input id="txt-orut-img-section1-1" type="text" class="orut-img-section1 form-control" value="<?php echo $detail['image'];?>">
+                                                                  <div class="input-group-append">
+                                                                        <button id="orut-img-section1-1" class="btn btn-primary orut-img-list-uploader" name="section1" type="button">upload</button>
+                                                                  </div>
+                                                            </div>
+                                                            <div class="col-lg-12 mb-4">
+                                                                  <input type="text" class="form-control orut-txt-heading-section1" value="<?php echo $detail['heading'];?>">
+                                                            </div>
+                                                            <div class="col-lg-12 mb-4">
+                                                                  <textarea class="orut-txt-desc-section1 form-control"><?php echo $detail['desc'];?></textarea>
+                                                            </div>
+                                                            <div class="col-lg-12 mb-4">
+                                                                  <input type="text" class="form-control orut-txt-btn-section1" value="<?php echo $detail['button'];?>">
+                                                            </div>
+                                                            <div class="col-lg-12 mb-1">
+                                                                  <input type="text" class="form-control orut-link-section1" value="<?php echo $detail['link'];?>">
+                                                            </div>   
+                                                      </div>
+                                          </div>
+                                    </div><!--list-->                                    
+                                    <?php      
+                                    }
                                     ?>
                                     </div>
+                                    <input type="hidden" id="orut-list-length-section1" value="<?php echo $listID+1; ?>">
                                     <!--end details-->
                                           </div>
                                     </div>

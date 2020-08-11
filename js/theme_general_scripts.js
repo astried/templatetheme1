@@ -17,13 +17,5 @@ $j(document).ready(function( $ ) {
        tb_remove();
     }
 
-    $(".orut-uploader").click(function() {
-      var myname = $(this).attr("name");
-       formfield = $('#orut-img-' + myname).attr('name');
-       wineditor_caller = "orut-img-" + myname;
-
-       tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
-       return false;
-    });
 
 });

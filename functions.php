@@ -109,15 +109,28 @@ if(is_admin())
 	add_action('admin_enqueue_scripts', 'orangut_themegeneral_scripts');
 
 }else{
+
 	function orangut_frontend_scripts()
 	{
 		wp_enqueue_script('jquery');
 
 		wp_enqueue_style('theme-style', get_stylesheet_uri() );
-		wp_enqueue_style('theme-bootstrap', get_template_directory_uri(). '/vendor/bootstrap/css/bootstrap.css' );
+		wp_enqueue_style('theme-bootstrap', get_template_directory_uri(). '/vendor/bootstrap4/css/bootstrap.css' );
 
-		wp_enqueue_script('theme-bootstrap', get_template_directory_uri(). '/vendor/bootstrap/js/bootstrap.js' );
-		wp_enqueue_script('theme-bootstrap-bundle', get_template_directory_uri(). '/vendor/bootstrap/js/bootstrap.bundle.js' );
+		wp_enqueue_script('theme-bootstrap', get_template_directory_uri(). '/vendor/bootstrap4/js/bootstrap.js' );
+		wp_enqueue_script('theme-bootstrap-bundle', get_template_directory_uri(). '/vendor/bootstrap4/js/bootstrap.bundle.js' );
+
+		wp_enqueue_script('theme_frontend-scripts', get_template_directory_uri(). '/js/theme_frontend.js', 
+							array( 'jquery' )
+						);
+
+		$ajax_url =  admin_url( 'admin-ajax.php' );
+
+		wp_localize_script( 'theme_frontend-scripts', 'orutajax',
+			            array( 'url' => $ajax_url,
+			                   'nonce' => wp_create_nonce( 'orangutantheme-nonce' )
+			                )
+			         );				
 	}
 
 	add_action('wp_enqueue_scripts', 'orangut_frontend_scripts');	
