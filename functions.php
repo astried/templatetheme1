@@ -40,6 +40,53 @@ function orangutantheme_menu() {
 }
 add_action( 'init', 'orangutantheme_menu' );
 
+/**
+ * Register widget area.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ */
+function orangutantheme_widgets_init() {
+if ( function_exists('register_sidebar') )
+{
+	register_sidebar(
+		array(
+			'name'          => __( 'Footer', 'orangutantheme' ),
+			'id'            => 'sidebar-1',
+			'description'   => __( 'Add widgets here to appear in your footer.', 'twentynineteen' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
+
+	register_sidebar(
+		array(
+			'name'          => __( 'SideBar', 'orangutantheme' ),
+			'id'            => 'sidebar-2',
+			'description'   => __( 'Add widgets here to appear in your sidebar.', 'orangutantheme' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);	
+
+	register_sidebar(
+		array(
+			'name'          => __( 'SideBar Posts', 'orangutantheme' ),
+			'id'            => 'sidebar-3',
+			'description'   => __( 'Add widgets here to appear in your sidebar.', 'orangutantheme' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s card mb-4">',
+			'after_widget'  => '</div></section>',
+			'before_title'  => '<h2 class="widget-title card-header">',
+			'after_title'   => '</h2><div class="card-body">',
+		)
+	);		
+}
+}
+add_action( 'widgets_init', 'orangutantheme_widgets_init' );
+
 //If this on admin dashboard
 if(is_admin())
 {
