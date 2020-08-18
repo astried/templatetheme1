@@ -255,6 +255,50 @@ $j(document).ready(function( $ ) {
         orut_upload_images();
     });
 
+
+    $("#orut-btn-save-footer").click(function(){
+        $('#orut-btn-save-footer').hide();
+        $('#orut-footer-loader').show();
+
+        var footer1 = $("#orut-footer-tab1").val();
+        var footer2 = $("#orut-footer-tab2").val();
+        var footer3 = $("#orut-footer-tab3").val();
+        var footerlayout = $("#orut-footer-layout").val();
+
+        $.ajax({
+            type  : "post",
+            url   :  orutajax.url,
+            data  : {   action: "orangutantheme_update_layout_footer",
+                        tab1 : footer1,
+                        tab2 : footer2,
+                        tab3 : footer3,
+                        collayout : footerlayout,
+                        nonce : orutajax.nonce 
+                    },
+            success: function(resp)
+                    {
+                        var response = JSON.parse(resp);
+
+                        if(response['code'] == '200' ){
+
+                        }
+                    },
+            error: function(xhr, status, error)
+                        {
+                            console.log( error );
+                        },
+            complete : function(xhr, status, error)
+                        {
+                            
+                        }
+        }); 
+
+        setTimeout(function(){ 
+            $("#orut-btn-save-footer").show();
+            $("#orut-footer-loader").hide();
+        }, 2000);        
+    });    
+
 function orut_section1_toggle()
 {
     $(".btn-toggle-section1-list").click(function(){

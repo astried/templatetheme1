@@ -29,6 +29,7 @@ margin-left:2%;
 						<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-section1" role="tab" aria-controls="nav-profile" aria-selected="false">Section 1</a>
 						<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-section2" role="tab" aria-controls="nav-contact" aria-selected="false">Section 2</a>
 						<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-section3" role="tab" aria-controls="nav-about" aria-selected="false">Section 3</a>
+                                    <a class="nav-item nav-link" id="nav-footer-tab" data-toggle="tab" href="#nav-footer" role="tab" aria-controls="nav-footer" aria-selected="false">Footer</a>
 					</div>
 				</nav>
 				<div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
@@ -413,12 +414,78 @@ margin-left:2%;
 
 					</div><!-- nav-section1-->
 
+                              <!-- nav-section2-->
 					<div class="tab-pane fade" id="nav-section2" role="tabpanel" aria-labelledby="nav-section2-tab">
 						Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
 					</div>
+                              <!--end nav-section2-->
+
+                              <!-- nav-section3-->
 					<div class="tab-pane fade" id="nav-section3" role="tabpanel" aria-labelledby="nav-section3-tab">
 						Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
 					</div>
+                              <!-- end nav-section3-->
+
+                              <!-- nav-footer-->
+                              <?php
+                              $tab1 = get_option('orut_layout_footer_tab1');                
+                              $tab2 = get_option('orut_layout_footer_tab2');                
+                              $tab3 = get_option('orut_layout_footer_tab3');                
+                              $tablayout = get_option('orut_layout_footer_column');
+                              ?>
+                              <div class="tab-pane fade" id="nav-footer" role="tabpanel" aria-labelledby="nav-footer-tab">
+                                    <div class="panel panel-default">
+                                          <div class="panel-heading"><h2>Footer</h2></div>
+                                          <div class="panel-body">  
+                                                <div class="row form-group col-lg-12">
+                                                      <div class="col-lg-2 mb-3">
+                                                          <label>Layout</label>
+                                                      </div>
+                                                      <div class="col-lg-10 mb-3">
+                                                            <select id="orut-footer-layout" class="form-control">
+                                                                  <option <?php if($tablayout=="1") echo "selected";?> value="1">1 columns</option>
+                                                                  <option <?php if($tablayout=="2") echo "selected";?> value="2">2 columns</option>
+                                                                  <option <?php if($tablayout=="3") echo "selected";?> value="3">3 columns</option>
+                                                            </select>
+                                                      </div>
+                                                </div>
+                                                <div class="row form-group col-lg-12">
+                                                      <div class="col-lg-2 mb-3">
+                                                          <label>Footer Tab 1</label>
+                                                      </div>
+                                                      <div class="col-lg-10 mb-3">
+                                                            <textarea id="orut-footer-tab1" class="form-control"><?php echo $tab1; ?></textarea>
+                                                      </div>
+                                                </div>  
+                                                 <div class="row form-group col-lg-12">
+                                                      <div class="col-lg-2 mb-3">
+                                                          <label>Footer Tab 2</label>
+                                                      </div>
+                                                      <div class="col-lg-10 mb-3">
+                                                            <textarea id="orut-footer-tab2" class="form-control"><?php echo $tab2; ?></textarea>
+                                                      </div>
+                                                </div>                                                 
+                                                <div class="row form-group col-lg-12">
+                                                      <div class="col-lg-2 mb-3">
+                                                          <label>Footer Tab 3</label>
+                                                      </div>
+                                                      <div class="col-lg-10 mb-3">
+                                                            <textarea id="orut-footer-tab3" class="form-control"><?php echo $tab3; ?></textarea>
+                                                      </div>
+                                                </div>  
+                                                <div class="row form-group col-lg-12">
+                                                      <div class="col-lg-2 mb-3">
+                                                            <button id="orut-btn-save-footer" class="btn btn-primary" type="button">
+                                                                  Save Footer <i class="fa fa-save"></i></button>
+                                                            <span id="orut-footer-loader" style="display:none;">
+                                                                  processing <img src="<?php echo get_template_directory_uri(). "/images/loader.gif"; ?>"></span>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                              <!-- end nav-footer-->
+
 				</div>
 			
 			</div>

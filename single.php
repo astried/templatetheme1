@@ -57,8 +57,10 @@ $display_name = get_the_author_meta( 'display_name' , $author_id );
       if($blogWidget=='left'):
 
 
-       if ( is_active_sidebar( 'sidebar-3' ) ) :
-        ?>
+      if ( is_active_sidebar( 'sidebar-3' ) ) :
+      ?>
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
 
         <?php if ( is_active_sidebar( 'sidebar-3' ) ) : ?>
           <?php dynamic_sidebar( 'sidebar-3' ); ?>
@@ -67,7 +69,9 @@ $display_name = get_the_author_meta( 'display_name' , $author_id );
         <?php  
         endif;
       ?>
-
+      <!-- Sidebar Widgets Column -->
+      </div>
+      
       <?php
       endif;
       ?>      
