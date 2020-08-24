@@ -22,8 +22,9 @@ $col = 12 / (int)$tablayout;
     <?php	
     }
     ?>
+
     </div>
-    <!-- /.container -->
+    
   </footer>
 
 </body>

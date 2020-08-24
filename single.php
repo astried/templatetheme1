@@ -6,6 +6,24 @@ $post_id = get_the_ID();
 $user_id = "";
 $ipaddress = "";
 
+$cats = get_the_category( $post_id );
+$show_cats = "";
+foreach($cats as $cat){
+  $obj = $cat;
+
+  if( $obj->term_id != 1 ){
+    $show_cats .=  $obj->cat_name . ", ";
+  }
+}
+if(!empty($show_cats)) $show_cats = substr($show_cats, 0, strlen($show_cats)-2);
+
+$tags = get_the_tags( $post_id );
+$show_tags = "";
+foreach($tags as $tag){
+  $obj = $tag;
+  $show_tags .=  $obj->name . " ";
+}
+
 if(is_user_logged_in()){
   $user_id = get_current_user_id();
 }
@@ -39,9 +57,7 @@ $display_name = get_the_author_meta( 'display_name' , $author_id );
 
     <!-- Page Heading/Breadcrumbs -->
     <h1 class="mt-4 mb-3"><?php echo $title;?>
-      <small>by
-        <a href="#"><?php echo $display_name;?></a>
-      </small>
+      
     </h1>
 
     <ol class="breadcrumb">
@@ -92,7 +108,10 @@ $display_name = get_the_author_meta( 'display_name' , $author_id );
       	?>
               <!-- Date/Time -->
               <p>Posted on <?php the_date(); ?> , <?php the_time(); ?></p>
-
+              <p>
+                <a href="#"><?php echo $display_name;?></a> <?php if(!empty($show_cats)) echo " | In ". $show_cats ?>
+              </p>
+              <?php if(!empty($show_tags)){ ?><p><?php echo $show_tags; ?></p> <?php } ?>
               <hr>
 
               <!-- Post Content -->
